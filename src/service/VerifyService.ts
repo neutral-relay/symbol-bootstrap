@@ -214,7 +214,7 @@ export class VerifyService {
         this.actions.push(
             new AppVersionVerifyAction(appVersionService, {
                 header: 'Docker Compose Version',
-                command: 'docker-compose --version',
+                command: 'docker compose version',
                 recommendationUrl: `https://docs.docker.com/compose/install/`,
                 expectedVersion: this.expectedVersions.dockerCompose,
             }),
