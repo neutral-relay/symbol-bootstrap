@@ -37,6 +37,9 @@ export default class Run extends Command {
         healthCheck: flags.boolean({
             description: HealthCheck.description,
         }),
+        hc: flags.boolean({
+            description: 'Short alias for --healthCheck.',
+        }),
 
         resetData: flags.boolean({
             description: 'It reset the database and node data but keeps the generated configuration, keys, voting tree files and block 1',
@@ -68,6 +71,6 @@ export default class Run extends Command {
         const { flags } = this.parse(Run);
         CommandUtils.showBanner();
         const logger = LoggerFactory.getLogger(flags.logger);
-        return new BootstrapService(logger).run(flags);
+        return new BootstrapService(logger).run({ ...flags, healthCheck: flags.healthCheck || flags.hc });
     }
 }

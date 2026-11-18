@@ -141,6 +141,30 @@ export class RunService {
         return (await Promise.all(allServicesChecks)).every((t) => t);
     }
 
+    /**
+     * Parses the short Docker Compose port syntax, including host-IP bindings.
+     * Examples: 27017, 27017:27017, 127.0.0.1:27017:27017, [::1]:27017:27017.
+     */
+    public static parsePortBinding(portBind: string): { host: string; externalPort: number; internalPort: number } {
+        const parts = portBind.split(':');
+        const internalPort = Number(parts.pop());
+        const externalPort = parts.length ? Number(parts.pop()) : internalPort;
+        const bindHost = parts.join(':').replace(/^\[|\]$/g, '');
+        const host = bindHost && bindHost !== '0.0.0.0' && bindHost !== '::' ? bindHost : 'localhost';
+
+        if (
+            !Number.isInteger(internalPort) ||
+            !Number.isInteger(externalPort) ||
+            internalPort < 1 ||
+            internalPort > 65535 ||
+            externalPort < 1 ||
+            externalPort > 65535
+        ) {
+            throw new Error(`Invalid Docker Compose port binding: ${portBind}`);
+        }
+        return { host, externalPort, internalPort };
+    }
+
     private async runOneCheck(services: DockerComposeService[]): Promise<boolean> {
         const runningContainers = (await this.runtimeService.exec('docker ps --format {{.Names}}')).stdout.split(`\n`);
         const allServicesChecks: Promise<boolean>[] = services.map(async (service) => {
@@ -152,10 +176,8 @@ export class RunService {
             return (
                 await Promise.all(
                     (service.ports || []).map(async (portBind) => {
-                        const ports = portBind.split(':');
-                        const externalPort = parseInt(ports[0]);
-                        const internalPort = ports.length > 1 ? parseInt(ports[1]) : externalPort;
-                        const portOpen = await PortService.isReachable(externalPort, 'localhost');
+                        const { host, externalPort, internalPort } = RunService.parsePortBinding(portBind);
+                        const portOpen = await PortService.isReachable(externalPort, host);
                         if (portOpen) {
                             this.logger.info(`Container ${service.container_name} port ${externalPort} -> ${internalPort} is open`);
                         } else {
@@ -165,7 +187,7 @@ export class RunService {
                             return false;
                         }
                         if (service.container_name.indexOf('rest-gateway') > -1) {
-                            const url = 'http://localhost:' + externalPort;
+                            const url = 'http://' + (host.includes(':') ? `[${host}]` : host) + ':' + externalPort;
                             const repositoryFactory = new RepositoryFactoryHttp(url);
                             const nodeRepository = repositoryFactory.createNodeRepository();
                             const testUrl = `${url}/node/health`;

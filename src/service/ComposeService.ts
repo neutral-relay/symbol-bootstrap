@@ -110,6 +110,7 @@ export class ComposeService {
                     if (openPort === true || openPort === 'true') {
                         return `${internalPort}:${internalPort}`;
                     }
+                    // openPort may contain a host IP and published port (for example, 127.0.0.1:27017).
                     return `${openPort}:${internalPort}`;
                 });
         };
