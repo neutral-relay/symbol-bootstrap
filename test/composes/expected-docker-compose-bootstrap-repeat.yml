@@ -74,7 +74,7 @@ services:
     peer-node-0:
         user: '1000:1000'
         container_name: peer-node-0
-        image: 'symbolplatform/symbol-server:gcc-1.0.3.10'
+        image: 'symbolplatform/symbol-server:gcc-1.0.3.11'
         ulimits:
             nofile:
                 soft: 65536
@@ -97,7 +97,7 @@ services:
     peer-node-1:
         user: '1000:1000'
         container_name: peer-node-1
-        image: 'symbolplatform/symbol-server:gcc-1.0.3.10'
+        image: 'symbolplatform/symbol-server:gcc-1.0.3.11'
         ulimits:
             nofile:
                 soft: 65536
@@ -120,7 +120,7 @@ services:
     peer-node-2:
         user: '1000:1000'
         container_name: peer-node-2
-        image: 'symbolplatform/symbol-server:gcc-1.0.3.10'
+        image: 'symbolplatform/symbol-server:gcc-1.0.3.11'
         ulimits:
             nofile:
                 soft: 65536
@@ -143,7 +143,7 @@ services:
     api-node-0:
         user: '1000:1000'
         container_name: api-node-0
-        image: 'symbolplatform/symbol-server:gcc-1.0.3.10'
+        image: 'symbolplatform/symbol-server:gcc-1.0.3.11'
         ulimits:
             nofile:
                 soft: 65536
@@ -167,7 +167,7 @@ services:
     api-node-1:
         user: '1000:1000'
         container_name: api-node-1
-        image: 'symbolplatform/symbol-server:gcc-1.0.3.10'
+        image: 'symbolplatform/symbol-server:gcc-1.0.3.11'
         ulimits:
             nofile:
                 soft: 65536
@@ -191,7 +191,7 @@ services:
     api-node-2:
         user: '1000:1000'
         container_name: api-node-2
-        image: 'symbolplatform/symbol-server:gcc-1.0.3.10'
+        image: 'symbolplatform/symbol-server:gcc-1.0.3.11'
         ulimits:
             nofile:
                 soft: 65536
@@ -215,7 +215,7 @@ services:
     api-node-3:
         user: '1000:1000'
         container_name: api-node-3
-        image: 'symbolplatform/symbol-server:gcc-1.0.3.10'
+        image: 'symbolplatform/symbol-server:gcc-1.0.3.11'
         ulimits:
             nofile:
                 soft: 65536
@@ -239,7 +239,7 @@ services:
     api-node-broker-0:
         user: '1000:1000'
         container_name: api-node-broker-0
-        image: 'symbolplatform/symbol-server:gcc-1.0.3.10'
+        image: 'symbolplatform/symbol-server:gcc-1.0.3.11'
         ulimits:
             nofile:
                 soft: 65536
@@ -259,7 +259,7 @@ services:
     api-node-broker-1:
         user: '1000:1000'
         container_name: api-node-broker-1
-        image: 'symbolplatform/symbol-server:gcc-1.0.3.10'
+        image: 'symbolplatform/symbol-server:gcc-1.0.3.11'
         ulimits:
             nofile:
                 soft: 65536
@@ -279,7 +279,7 @@ services:
     api-node-broker-2:
         user: '1000:1000'
         container_name: api-node-broker-2
-        image: 'symbolplatform/symbol-server:gcc-1.0.3.10'
+        image: 'symbolplatform/symbol-server:gcc-1.0.3.11'
         ulimits:
             nofile:
                 soft: 65536
@@ -299,7 +299,7 @@ services:
     api-node-broker-3:
         user: '1000:1000'
         container_name: api-node-broker-3
-        image: 'symbolplatform/symbol-server:gcc-1.0.3.10'
+        image: 'symbolplatform/symbol-server:gcc-1.0.3.11'
         ulimits:
             nofile:
                 soft: 65536

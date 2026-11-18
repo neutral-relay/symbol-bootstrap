@@ -2,7 +2,7 @@ services:
     node:
         user: '1000:1000'
         container_name: node
-        image: 'symbolplatform/symbol-server:gcc-1.0.3.10'
+        image: 'symbolplatform/symbol-server:gcc-1.0.3.11'
         ulimits:
             nofile:
                 soft: 65536

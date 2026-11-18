@@ -27,7 +27,7 @@ services:
     node:
         user: '1000:1000'
         container_name: node
-        image: 'symbolplatform/symbol-server:gcc-1.0.3.10'
+        image: 'symbolplatform/symbol-server:gcc-1.0.3.11'
         ulimits:
             nofile:
                 soft: 65536
@@ -61,7 +61,7 @@ services:
     broker:
         user: '1000:1000'
         container_name: broker
-        image: 'symbolplatform/symbol-server:gcc-1.0.3.10'
+        image: 'symbolplatform/symbol-server:gcc-1.0.3.11'
         ulimits:
             nofile:
                 soft: 65536

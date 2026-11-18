@@ -22,7 +22,7 @@ services:
         privileged: true
     node:
         container_name: node
-        image: 'symbolplatform/symbol-server:gcc-1.0.3.10'
+        image: 'symbolplatform/symbol-server:gcc-1.0.3.11'
         ulimits:
             nofile:
                 soft: 65536
@@ -47,7 +47,7 @@ services:
         privileged: true
     broker:
         container_name: broker
-        image: 'symbolplatform/symbol-server:gcc-1.0.3.10'
+        image: 'symbolplatform/symbol-server:gcc-1.0.3.11'
         ulimits:
             nofile:
                 soft: 65536
