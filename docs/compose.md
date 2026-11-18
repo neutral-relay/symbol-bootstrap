@@ -39,3 +39,16 @@ EXAMPLE
 ```
 
 _See code: [src/commands/compose.ts](https://github.com/fboucquez/symbol-bootstrap/blob/v1.1.7/src/commands/compose.ts)_
+
+### Bind a database port to the VPS loopback interface
+
+The generated `docker-compose.yml` uses the `databases[].openPort` setting from a custom preset.
+To allow tools on the Docker host to reach MongoDB without publishing it on all network interfaces:
+
+```yaml
+databases:
+  - openPort: '127.0.0.1:27017'
+```
+
+This generates `ports: ['127.0.0.1:27017:27017']` for the database service.
+The `run --healthCheck` option also accepts the shorter `run --hc` form (as does `start --hc`).

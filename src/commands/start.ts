@@ -51,6 +51,6 @@ export default class Start extends Command {
 
         const workingDir = Constants.defaultWorkingDir;
         const accountResolver = new BootstrapAccountResolver(logger);
-        await new BootstrapService(logger).start({ ...flags, accountResolver, workingDir });
+        await new BootstrapService(logger).start({ ...flags, healthCheck: flags.healthCheck || flags.hc, accountResolver, workingDir });
     }
 }

@@ -25,6 +25,31 @@ const fileSystemService = new FileSystemService(logger);
 describe('RunService', () => {
     const target = 'target/tests/BootstrapService.standard';
 
+    it('parses Docker Compose port bindings for health checks', () => {
+        expect(RunService.parsePortBinding('27017')).to.deep.equal({
+            host: 'localhost',
+            externalPort: 27017,
+            internalPort: 27017,
+        });
+        expect(RunService.parsePortBinding('27018:27017')).to.deep.equal({
+            host: 'localhost',
+            externalPort: 27018,
+            internalPort: 27017,
+        });
+        expect(RunService.parsePortBinding('127.0.0.1:27017:27017')).to.deep.equal({
+            host: '127.0.0.1',
+            externalPort: 27017,
+            internalPort: 27017,
+        });
+        expect(RunService.parsePortBinding('[::1]:27018:27017')).to.deep.equal({
+            host: '::1',
+            externalPort: 27018,
+            internalPort: 27017,
+        });
+        expect(RunService.parsePortBinding('0.0.0.0:27017:27017').host).to.equal('localhost');
+        expect(() => RunService.parsePortBinding('127.0.0.1:not-a-port:27017')).to.throw('Invalid Docker Compose port binding');
+    });
+
     it('healthCheck', async () => {
         const bootstrapService = new BootstrapService(logger);
         const config: StartParams = {

@@ -377,6 +377,31 @@ ${YamlUtils.toYaml(dockerCompose)}
         }
     });
 
+    it('generates a localhost-only MongoDB port binding from openPort', async () => {
+        const target = 'target/tests/ComposeService-localhost-mongodb';
+        const params = {
+            ...ConfigService.defaultParams,
+            ...LinkService.defaultParams,
+            target,
+            password,
+            reset: false,
+            preset: Preset.testnet,
+            assembly: Assembly.dual,
+            customPresetObject: {
+                databases: [{ openPort: '127.0.0.1:27017' }],
+            },
+        };
+        try {
+            const presetData = new ConfigLoader(logger).createPresetData({ ...params, workingDir: Constants.defaultWorkingDir });
+            const dockerCompose = await new ComposeService(logger, params).run(presetData);
+            expect(dockerCompose.services.db.ports).to.deep.equal(['127.0.0.1:27017:27017']);
+            const generated = YamlUtils.loadYaml(join(target, 'docker', 'docker-compose.yml'), false) as DockerCompose;
+            expect(generated.services.db.ports).to.deep.equal(['127.0.0.1:27017:27017']);
+        } finally {
+            fileSystemService.deleteFolder(target);
+        }
+    });
+
     it('resolveDebugOptions', async () => {
         const service = new ComposeService(logger, ComposeService.defaultParams);
         expect(service.resolveDebugOptions(true, true)).deep.equals(ComposeService.DEBUG_SERVICE_PARAMS);
